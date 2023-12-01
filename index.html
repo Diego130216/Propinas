@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formularios Dinámicos</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+  <h1>Propinas AG</h1>
+
+  <form id="miForm" class="miForm" action="#" method="post">
+    <label for="cuadrofecha">Fecha:</label>
+    <input type="date" id="fecha" name="fecha" onchange="obtenerDiaSemana()" required>
+  </form>
+
+  <div class="container" id="contenedorFormularios" class="form-row">
+
+
+  </div>
+  <button type="button" onclick="enviarFormularios()">Enviar</button>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <script src="script.js"></script>
+  
+
+
+</body>
+
+</html>

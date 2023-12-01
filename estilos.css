@@ -1,0 +1,100 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+/* Estilos para el título h1 */
+h1 {
+  font-size: 40px; /* Tamaño de la fuente */
+  color: white; /* Color del texto */
+  margin-bottom: 2px; /* Espacio inferior */
+  text-align: center; /* Alineación al centro */
+  background-color: #293241;
+}
+
+.container {
+  max-width: 1700px;
+  margin: 2px auto;
+  padding: 20px;
+  background-color: #98c1d9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  margin-top: 20px;
+}
+
+form {
+  flex: 0 0 calc(50% - 40px); /* Ajustar según el número de formularios por fila */
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input,
+select,
+button {
+  margin-bottom: 10px;
+  padding: 8px;
+  width: 100%; /* Ancho del 100% para llenar el contenedor */
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #4caf50;
+  color: #ffff;
+  border: none;
+  padding: 10px 10px;
+  cursor: pointer;
+}
+
+
+#resultado {
+  margin-top: 20px;
+}
+
+/* -------------------------------*/
+/* Estilos para los formularios */
+.miFormulario {
+  margin-bottom: 2px;
+  padding: 18px;
+  border: 2px solid #ccc;
+  display: inline-block;
+  border-radius: 2px;
+}
+.miForm {
+  margin-bottom: 5px;
+  padding: 2%;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Estilos para los campos de entrada */
+.miFormulario input,
+.miFormulario select {
+  margin-bottom: 10px;
+  padding: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Estilos para el botón de enviar */
+.miFormulario button {
+  padding: 10px 10px;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Cambiar el color del botón al pasar el ratón sobre él */
+.miFormulario button:hover {
+  background-color: #45a049;
+}
