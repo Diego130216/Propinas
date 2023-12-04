@@ -3,7 +3,7 @@ window.jsPDF = window.jspdf.jsPDF;
 
 
 var arrayNombres = ["juan", "diego", "olaya", "manuel", "wilson", "a", "b", "c", "d", "f", "a", "abc", "perreo", "juan", "diego", "olaya", "manuel", "wilson", "a", "b", "c", "d", "f", "a", "abc", "perreo"];
-var canti = 12;
+var canti = 4;
 
 // Función para crear un nuevo formulario
 function crearFormulario(id) {
@@ -95,13 +95,13 @@ function enviarFormularios(event) {
 
     var propi = document.getElementById('propina' + (j + 1)).value;
     propiT = propiT + parseInt(propi);
-    var numeroRedondeado ;;
+    var numeroRedondeado;;
 
     // Verificar si el número es entero antes de redondear
-    if (Number.isInteger(parseFloat(propi/arraySinElementosVacios.length))) {
-      numeroRedondeado = propi/arraySinElementosVacios.length;
+    if (Number.isInteger(parseFloat(propi / arraySinElementosVacios.length))) {
+      numeroRedondeado = propi / arraySinElementosVacios.length;
     } else {
-      numeroRedondeado = parseFloat(propi /arraySinElementosVacios.length).toFixed(3);
+      numeroRedondeado = parseFloat(propi / arraySinElementosVacios.length).toFixed(3);
     }
     pr0pinas.push(numeroRedondeado);
     console.log(propi)
@@ -179,35 +179,32 @@ function generarPDF(pr0pinas, arrayNombres, opcionesTotales) {
   var dia = ["Miércoles   Jueves    Viernes   Sábado   Domingo Lunes  Miércoles   Jueves    Viernes   Sábado   Domingo Lunes"];
   // Configurar contenido del PDF
   pdf.text("Resultados Totales", 80, 5);
- // Configurar contenido del PDF
- pdf.text("Resultados Totales", 80, 5);
+  // Configurar contenido del PDF
+  pdf.text("Resultados Totales", 80, 5);
 
- // Organizar en una tabla
- var tableData = [];
- for (var i = 0; i < arrayNombres.length; i++) {
-   tableData.push([arrayNombres[i], totales[i][0], totales[i][1], totales[i][2],totales[i][3], totales[i][4], totales[i][5],totales[i][6],totales[i][7],totales[i][8],totales[i][9],totales[i][10],totales[i][11], propinaT(totales)[i],"        "]);
- }
+  // Organizar en una tabla
+  var tableData = [];
+  for (var i = 0; i < arrayNombres.length; i++) {
+    tableData.push([arrayNombres[i], totales[i][0], totales[i][1], totales[i][2], totales[i][3], totales[i][4], totales[i][5], totales[i][6], totales[i][7], totales[i][8], totales[i][9], totales[i][10], totales[i][11], propinaT(totales)[i], "        "]);
+  }
 
- // Configurar estilos para la tabla
-var styles = {
-  lineColor: [0, 0, 0], // Color de las líneas de la tabla en formato RGB
-  lineWidth: 1, // Grosor de las líneas de la tabla
-  font: 'helvetica', // Tipo de fuente
-  fontStyle: 'normal', // Estilo de fuente: normal, bold, italic, bolditalic
-  fontSize: 8, // Tamaño de la fuente
-  cellPadding: 2, // Relleno de las celdas
-  fillColor: [255, 255, 255], // Color de fondo de las celdas en formato RGB
-  textColor: [0, 0, 0] // Color del texto en formato RGB
-};
+  // Configurar estilos para la tabla
+  var StyleDef = {
+    font: 'helvetica', // Tipo de fuente
+    fontStyle: 'normal', // Estilo de fuente: normal, bold, italic, bolditalic
+    fontSize: 8, // Tamaño de la fuente
 
-// Configurar opciones para la tabla
-var options = {
-   startY: 15,
-   head: [['Día', "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo","Lunes","Miércoles", "Jueves", "Viernes", "Sábado", "Domingo","Lunes", 'Suma',"Firma"]],
-   body: tableData
- };
+  };
 
- pdf.autoTable(styles, options);
+  // Configurar opciones para la tabla
+  pdf.autoTable({
+    theme:'grid',
+    styles: StyleDef,
+    startY: 15,
+    head: [['Día', "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo", "Lunes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo", "Lunes", 'Suma', "Firma"]],
+    body: tableData
+  });
+
 
   // Guardar o mostrar el PDF
   pdf.save("resultados.pdf");
