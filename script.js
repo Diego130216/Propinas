@@ -1,4 +1,5 @@
-window.jsPDF = window.jspdf.jsPDF
+window.jsPDF = window.jspdf.jsPDF;
+
 
 
 var arrayNombres = ["juan", "diego", "olaya", "manuel", "wilson", "a", "b", "c", "d", "f", "a", "abc", "perreo", "juan", "diego", "olaya", "manuel", "wilson", "a", "b", "c", "d", "f", "a", "abc", "perreo"];
@@ -174,30 +175,39 @@ function generarPDF(pr0pinas, arrayNombres, opcionesTotales) {
   var pdf = new jsPDF({
     orientation: "landscape"
   });
-  var dias = ["Miércoles   Jueves    Viernes   Sábado   Domingo Lunes  Miércoles   Jueves    Viernes   Sábado   Domingo Lunes"];
-
+  var dias = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
+  var dia = ["Miércoles   Jueves    Viernes   Sábado   Domingo Lunes  Miércoles   Jueves    Viernes   Sábado   Domingo Lunes"];
   // Configurar contenido del PDF
   pdf.text("Resultados Totales", 80, 5);
-  pdf.text(dias, 40, 10);
+ // Configurar contenido del PDF
+ pdf.text("Resultados Totales", 80, 5);
 
-  var suma = propinaT(totales);
-  // Agregar datos al PDF
-  var j = 0;
-  for (var i = 0; i < totales.length; i++) {
+ // Organizar en una tabla
+ var tableData = [];
+ for (var i = 0; i < arrayNombres.length; i++) {
+   tableData.push([arrayNombres[i], totales[i][0], totales[i][1], totales[i][2],totales[i][3], totales[i][4], totales[i][5],totales[i][6],totales[i][7],totales[i][8],totales[i][9],totales[i][10],totales[i][11], propinaT(totales)[i],"        "]);
+ }
 
-    pdf.text(arrayNombres[i], 5, 30 + j * 10);
-    pdf.text("" + totales[i], 35, 30 + j * 10);
-    pdf.text("" + suma[i], 250, 30 + j * 10);
+ // Configurar estilos para la tabla
+var styles = {
+  lineColor: [0, 0, 0], // Color de las líneas de la tabla en formato RGB
+  lineWidth: 1, // Grosor de las líneas de la tabla
+  font: 'helvetica', // Tipo de fuente
+  fontStyle: 'normal', // Estilo de fuente: normal, bold, italic, bolditalic
+  fontSize: 8, // Tamaño de la fuente
+  cellPadding: 2, // Relleno de las celdas
+  fillColor: [255, 255, 255], // Color de fondo de las celdas en formato RGB
+  textColor: [0, 0, 0] // Color del texto en formato RGB
+};
 
-    if ((i + 1) % 15 === 0) {
-      // Si se desborda, agregar una nueva página
-      j = 0;
-      pdf.addPage({
-        orientation: "landscape"
-      })
-    }
-    j++;
-  }
+// Configurar opciones para la tabla
+var options = {
+   startY: 15,
+   head: [['Día', "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo","Lunes","Miércoles", "Jueves", "Viernes", "Sábado", "Domingo","Lunes", 'Suma',"Firma"]],
+   body: tableData
+ };
+
+ pdf.autoTable(styles, options);
 
   // Guardar o mostrar el PDF
   pdf.save("resultados.pdf");
