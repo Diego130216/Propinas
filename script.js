@@ -3,7 +3,8 @@ window.jsPDF = window.jspdf.jsPDF;
 
 
 var arrayNombres = ["juan", "diego olaya", "olaya", "manuel", "wilson lo siento", "sebastian sandoval", "b", "c", "d", "f", "a", "abc", "perreo"];
-var canti = 4;
+var canti = 12;
+var fechasIngre=[];
 
 // Función para crear un nuevo formulario
 function crearFormulario(id) {
@@ -72,12 +73,17 @@ function obtenerDiaSemana() {
   for (var i = 0; i < canti; i++) {
     if (i == 6) {
       ab = 2;
-    } else {
-      ab = 1;
+    } 
+     if(i==0){
+      ab=0;
+     }
+    if (i!= 0 && i!=6){
+      ab=1;
     }
 
     fechaSeleccionada.setDate(fechaSeleccionada.getDate() + ab);
     var fechaFormateada = fechaSeleccionada.toISOString().split('T')[0];
+    fechasIngre.push(fechaFormateada);
     document.getElementById('cuadroFecha' + (i + 1)).value = fechaFormateada;
 
     var diaSemana = fechaSeleccionada.getDay();
@@ -234,7 +240,8 @@ function generarPDF(pr0pinas, arrayNombres, opcionesTotales) {
     theme: 'grid',
     styles: StyleDef,
     startY: 15,
-    head: [['Nombre', "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo", "Lunes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo", "Lunes", 'Suma', "Firma"]],
+    head: [ ["",fechasIngre[0],fechasIngre[1],fechasIngre[2],fechasIngre[3],fechasIngre[4],fechasIngre[5],fechasIngre[6],fechasIngre[7],fechasIngre[8],fechasIngre[9],fechasIngre[10],fechasIngre[11],"","",],
+      ['Nombre', "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo", "Lunes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo", "Lunes", 'Suma', "Firma"]],
     body: tableData
   });
 
