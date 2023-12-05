@@ -2,7 +2,7 @@ window.jsPDF = window.jspdf.jsPDF;
 
 
 
-var arrayNombres = ["juan", "diego", "olaya", "manuel", "wilson", "a", "b", "c", "d", "f", "a", "abc", "perreo", "juan", "diego", "olaya", "manuel", "wilson", "a", "b", "c", "d", "f", "a", "abc", "perreo"];
+var arrayNombres = ["juan", "diego olaya", "olaya", "manuel", "wilson", "sebastian sandoval", "b", "c", "d", "f", "a", "abc", "perreo"];
 var canti = 4;
 
 // Función para crear un nuevo formulario
@@ -22,13 +22,40 @@ function crearFormulario(id) {
     <label for="propina${id}">Valor de propina:</label>
     <input type="number" id="propina${id}" name="propina${id}" min="0" required>
 
-    <label for="nombres${id}">Nombres:</label>
-    <select id="nombres${id}" name="nombres${id}[]" multiple required>
-      <!-- Agrega opciones según sea necesario -->
-    </select>
-  `;
+    <label for="nombre${id}">Todos los Nombres:</label>
+  <select id="nombre${id}" multiple>
+  
+    <!-- Agrega más opciones según sea necesario -->
+  </select>
+
+  <div>
+    <button onclick="moverElementos('nombre${id}', 'nombres${id}')">Agregar &gt;&gt;</button>
+    <button onclick="moverElementos('nombres${id}', 'nombre${id}')">&lt;&lt; Quitar</button>
+  </div>
+
+  <label for="nombres${id}">Nombres Seleccionados:</label>
+  <select id="nombres${id}" name="nombres${id}[]" multiple required></select>`
+
+    // <label for="nombres${id}">Nombres:</label>
+    // <select id="nombres${id}" name="nombres${id}[]" multiple required>
+    //   <!-- Agrega opciones según sea necesario -->
+    // </select>
+  ;
 
   contenedor.appendChild(formulario);
+}
+
+function moverElementos(origenId, destinoId) {
+  var origen = document.getElementById(origenId);
+  var destino = document.getElementById(destinoId);
+
+  for (var i = 0; i < origen.options.length; i++) {
+    if (origen.options[i].selected) {
+      destino.add(new Option(origen.options[i].text, origen.options[i].value));
+      origen.remove(i);
+      i--; // Ajustar el índice después de la eliminación
+    }
+  }
 }
 
 // Crear x cantidad de formularios
@@ -82,10 +109,14 @@ function enviarFormularios(event) {
     var opcionesSeleccionadas = [];
     var select = document.getElementById('nombres' + (j + 1));
 
+    // for (var i = 0; i < select.options.length; i++) {
+    //   if (select.options[i].selected) {
+    //     opcionesSeleccionadas[i] = select.options[i].value;
+    //     options[i].value
+    //   }
+    // }
     for (var i = 0; i < select.options.length; i++) {
-      if (select.options[i].selected) {
-        opcionesSeleccionadas[i] = select.options[i].value;
-      }
+      opcionesSeleccionadas.push(select.options[i].value);
     }
 
 
@@ -101,7 +132,7 @@ function enviarFormularios(event) {
     if (Number.isInteger(parseFloat(propi / arraySinElementosVacios.length))) {
       numeroRedondeado = propi / arraySinElementosVacios.length;
     } else {
-      numeroRedondeado = parseFloat(propi / arraySinElementosVacios.length).toFixed(3);
+      numeroRedondeado = parseFloat(propi / arraySinElementosVacios.length).toFixed(0);
     }
     pr0pinas.push(numeroRedondeado);
     console.log(propi)
@@ -129,7 +160,7 @@ function enviarFormularios(event) {
 for (var c = 0; c < canti; c++) {
 
   // Obtén el elemento select
-  var selectNombres = document.getElementById('nombres' + (c + 1));
+  var selectNombres = document.getElementById('nombre' + (c + 1));
 
   // Itera sobre el array y agrega opciones al select
   arrayNombres.forEach(function (nombre) {
@@ -151,7 +182,7 @@ function calcularP(pr0pinas, arrayNombres, opcionesTotales) {
 
       for (var b = 0; b < opcionesTotales[a].length; b++) {
         if (opcionesTotales[a][b] === arrayNombres[i]) {
-          salida[a] = pr0pinas[a];
+          salida[a] = formatN(pr0pinas[a]);
           break;
         } else {
           salida[a] = 0;
@@ -185,7 +216,7 @@ function generarPDF(pr0pinas, arrayNombres, opcionesTotales) {
   // Organizar en una tabla
   var tableData = [];
   for (var i = 0; i < arrayNombres.length; i++) {
-    tableData.push([arrayNombres[i], totales[i][0], totales[i][1], totales[i][2], totales[i][3], totales[i][4], totales[i][5], totales[i][6], totales[i][7], totales[i][8], totales[i][9], totales[i][10], totales[i][11], propinaT(totales)[i], "        "]);
+    tableData.push([arrayNombres[i], totales[i][0], totales[i][1], totales[i][2], totales[i][3], totales[i][4], totales[i][5], totales[i][6], totales[i][7], totales[i][8], totales[i][9], totales[i][10], totales[i][11], propinaT(totales[i]), "        "]);
   }
 
   // Configurar estilos para la tabla
@@ -198,10 +229,10 @@ function generarPDF(pr0pinas, arrayNombres, opcionesTotales) {
 
   // Configurar opciones para la tabla
   pdf.autoTable({
-    theme:'grid',
+    theme: 'grid',
     styles: StyleDef,
     startY: 15,
-    head: [['Día', "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo", "Lunes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo", "Lunes", 'Suma', "Firma"]],
+    head: [['Nombre', "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo", "Lunes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo", "Lunes", 'Suma', "Firma"]],
     body: tableData
   });
 
@@ -214,10 +245,34 @@ function sumarArray(array) {
   return array.reduce((acumulador, elemento) => acumulador + elemento, 0);
 }
 
-function propinaT(array) {
+function propinaT(array1) {
   var sumapro = []
-  for (var i = 0; i < array.length; i++) {
-    sumapro[i] = sumarArray(array[i].map(Number));
-  }
-  return sumapro;
+  var numero = removeCommas(array1);
+
+    console.log(numero);
+    if (Number.isInteger(sumarArray(numero.map(Number)))) {
+      sumapro[i] =formatN (sumarArray(numero.map(Number)));
+    } else {
+      sumapro[i] = formatN(parseFloat(sumarArray(numero.map(Number))).toFixed(0));
+    }
+    console.log(sumapro)
+    var vacios = sumapro.filter(function (elemento) {
+      return elemento !== "";
+    });
+  return vacios;
+  
+}
+
+function formatN(number) {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
+function removeCommas(formattedArray) {
+  return formattedArray.map(function (formattedNumber) {
+    if (typeof formattedNumber === 'string') {
+      return formattedNumber.replace(/\./g, "");
+    } else {
+      return String(formattedNumber);
+    }
+  });
 }
