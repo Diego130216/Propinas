@@ -2,7 +2,7 @@ window.jsPDF = window.jspdf.jsPDF;
 
 
 
-var arrayNombres = ["juan", "diego olaya", "olaya", "manuel", "wilson", "sebastian sandoval", "b", "c", "d", "f", "a", "abc", "perreo"];
+var arrayNombres = ["juan", "diego olaya", "olaya", "manuel", "wilson lo siento", "sebastian sandoval", "b", "c", "d", "f", "a", "abc", "perreo"];
 var canti = 4;
 
 // Función para crear un nuevo formulario
@@ -116,12 +116,13 @@ function enviarFormularios(event) {
     //   }
     // }
     for (var i = 0; i < select.options.length; i++) {
-      opcionesSeleccionadas.push(select.options[i].value);
+      opcionesSeleccionadas.push(select.options[i].innerText);
+      console.log("selec",select.options[i].innerText)
     }
 
 
     var arraySinElementosVacios = opcionesSeleccionadas.filter(function (elemento) {
-      return elemento !== "";
+      return typeof elemento === 'string' && elemento.trim() !== "";
     });
 
     var propi = document.getElementById('propina' + (j + 1)).value;
@@ -181,6 +182,7 @@ function calcularP(pr0pinas, arrayNombres, opcionesTotales) {
       console.log("Resultados formulario " + (a + 1));
 
       for (var b = 0; b < opcionesTotales[a].length; b++) {
+        console.log(opcionesTotales[a][b], arrayNombres[i]);
         if (opcionesTotales[a][b] === arrayNombres[i]) {
           salida[a] = formatN(pr0pinas[a]);
           break;
@@ -245,6 +247,7 @@ function sumarArray(array) {
   return array.reduce((acumulador, elemento) => acumulador + elemento, 0);
 }
 
+//Calcula el total de propinas por persona
 function propinaT(array1) {
   var sumapro = []
   var numero = removeCommas(array1);
@@ -263,10 +266,12 @@ function propinaT(array1) {
   
 }
 
+//Le da formato a los numeros en . por cada 1000
 function formatN(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
 
+//Devuelve el formato 
 function removeCommas(formattedArray) {
   return formattedArray.map(function (formattedNumber) {
     if (typeof formattedNumber === 'string') {
