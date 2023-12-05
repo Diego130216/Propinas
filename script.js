@@ -83,6 +83,7 @@ function obtenerDiaSemana() {
 
     fechaSeleccionada.setDate(fechaSeleccionada.getDate() + ab);
     var fechaFormateada = fechaSeleccionada.toISOString().split('T')[0];
+    console.log(fechaFormateada);
     fechasIngre.push(fechaFormateada);
     document.getElementById('cuadroFecha' + (i + 1)).value = fechaFormateada;
 
@@ -93,7 +94,7 @@ function obtenerDiaSemana() {
 
 
 
-  }
+  }console.log(fechasIngre);
 
 }
 
@@ -123,7 +124,6 @@ function enviarFormularios(event) {
     // }
     for (var i = 0; i < select.options.length; i++) {
       opcionesSeleccionadas.push(select.options[i].innerText);
-      console.log("selec",select.options[i].innerText)
     }
 
 
@@ -142,11 +142,9 @@ function enviarFormularios(event) {
       numeroRedondeado = parseFloat(propi / arraySinElementosVacios.length).toFixed(0);
     }
     pr0pinas.push(numeroRedondeado);
-    console.log(propi)
 
     opcionesTotales[j] = arraySinElementosVacios;
-    console.log("Matriz uni", opcionesSeleccionadas);
-    console.log("Matriz bi", opcionesTotales);
+
 
     // Resto de la lógica que desees aplicar
   }
@@ -188,7 +186,6 @@ function calcularP(pr0pinas, arrayNombres, opcionesTotales) {
       console.log("Resultados formulario " + (a + 1));
 
       for (var b = 0; b < opcionesTotales[a].length; b++) {
-        console.log(opcionesTotales[a][b], arrayNombres[i]);
         if (opcionesTotales[a][b] === arrayNombres[i]) {
           salida[a] = formatN(pr0pinas[a]);
           break;
@@ -214,12 +211,6 @@ function generarPDF(pr0pinas, arrayNombres, opcionesTotales) {
   var pdf = new jsPDF({
     orientation: "landscape"
   });
-  var dias = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
-  var dia = ["Miércoles   Jueves    Viernes   Sábado   Domingo Lunes  Miércoles   Jueves    Viernes   Sábado   Domingo Lunes"];
-  // Configurar contenido del PDF
-  pdf.text("Resultados Totales", 80, 5);
-  // Configurar contenido del PDF
-  pdf.text("Resultados Totales", 80, 5);
 
   // Organizar en una tabla
   var tableData = [];
@@ -242,12 +233,16 @@ function generarPDF(pr0pinas, arrayNombres, opcionesTotales) {
     startY: 15,
     head: [ ["",fechasIngre[0],fechasIngre[1],fechasIngre[2],fechasIngre[3],fechasIngre[4],fechasIngre[5],fechasIngre[6],fechasIngre[7],fechasIngre[8],fechasIngre[9],fechasIngre[10],fechasIngre[11],"","",],
       ['Nombre', "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo", "Lunes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo", "Lunes", 'Suma', "Firma"]],
-    body: tableData
+    body: tableData,
+    didDrawPage: function (data) {
+      // Inserta el nombre de la tabla en la parte superior de la página
+      pdf.text(`Tabla propinas AG del ${fechasIngre[0]} al ${fechasIngre[11]} `, data.settings.margin.left, 10);
+  }
   });
 
 
   // Guardar o mostrar el PDF
-  pdf.save("resultados.pdf");
+  pdf.save(`propinas del ${fechasIngre[0]} al ${fechasIngre[11]}.pdf`);
 }
 
 function sumarArray(array) {
@@ -265,7 +260,6 @@ function propinaT(array1) {
     } else {
       sumapro[i] = formatN(parseFloat(sumarArray(numero.map(Number))).toFixed(0));
     }
-    console.log(sumapro)
     var vacios = sumapro.filter(function (elemento) {
       return elemento !== "";
     });
