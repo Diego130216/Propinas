@@ -2,9 +2,44 @@ window.jsPDF = window.jspdf.jsPDF;
 
 
 
-var arrayNombres = ["juan", "diego olaya", "olaya", "manuel", "wilson lo siento", "sebastian sandoval", "b", "c", "d", "f", "a", "abc", "perreo"];
+var arrayNombres1 = ["juan", "diego olaya", "olaya", "manuel", "wilson lo siento", "sebastian sandoval", "b", "c", "d", "f", "a", "abc", "perreo"];
+// Arreglo a guardar
+
+// Convertir el arreglo a una cadena JSON y guardar en localStorage
+localStorage.setItem('arregloGuardado', JSON.stringify(arrayNombres1));
+
+// Obtener la cadena JSON del localStorage y convertirla de nuevo a un arreglo
+var arrayNombres = JSON.parse(localStorage.getItem('arregloGuardado'));
+
+
+// Modificar el arreglo (por ejemplo, agregar un nuevo elemento)
+function agregarNombre(){
+ var inputNombre = document.getElementById("nombreNuevo");
+arrayNombres.push(inputNombre.value);
+localStorage.setItem('arregloGuardado', JSON.stringify(arrayNombres));
+asignrNombres();
+}
+// Guardar el arreglo modificado de nuevo en localStorage
+localStorage.setItem('arregloGuardado', JSON.stringify(arrayNombres));
+
+var indice = arrayNombres.indexOf("juan");
+
+// Verificar si el elemento está en el arreglo antes de intentar eliminarlo
+if (indice !== -1) {
+  // Eliminar el elemento del arreglo
+  arrayNombres .splice(indice, 1);
+
+  // Guardar el arreglo modificado de nuevo en localStorage
+  localStorage.setItem('arregloGuardado', JSON.stringify(arrayNombres));
+}
+
+// Mostrar el arreglo obtenido
+console.log(arrayNombres);
+
+
+
 var canti = 12;
-var fechasIngre=[];
+var fechasIngre = [];
 
 // Función para crear un nuevo formulario
 function crearFormulario(id) {
@@ -41,7 +76,7 @@ function crearFormulario(id) {
     // <select id="nombres${id}" name="nombres${id}[]" multiple required>
     //   <!-- Agrega opciones según sea necesario -->
     // </select>
-  ;
+    ;
 
   contenedor.appendChild(formulario);
 }
@@ -64,6 +99,8 @@ for (var i = 1; i <= canti; i++) {
   crearFormulario(i);
 }
 
+asignrNombres();
+
 
 
 
@@ -73,12 +110,12 @@ function obtenerDiaSemana() {
   for (var i = 0; i < canti; i++) {
     if (i == 6) {
       ab = 2;
-    } 
-     if(i==0){
-      ab=0;
-     }
-    if (i!= 0 && i!=6){
-      ab=1;
+    }
+    if (i == 0) {
+      ab = 0;
+    }
+    if (i != 0 && i != 6) {
+      ab = 1;
     }
 
     fechaSeleccionada.setDate(fechaSeleccionada.getDate() + ab);
@@ -94,7 +131,7 @@ function obtenerDiaSemana() {
 
 
 
-  }console.log(fechasIngre);
+  } console.log(fechasIngre);
 
 }
 
@@ -157,15 +194,17 @@ function enviarFormularios(event) {
     }
   }
   generarPDF(pr0pinas, arrayNombres, opcionesTotales);
-  // Array con nombres
+
 
 }
 
 //Asignar nombres
+function asignrNombres(){
 for (var c = 0; c < canti; c++) {
 
   // Obtén el elemento select
   var selectNombres = document.getElementById('nombre' + (c + 1));
+  arrayNombres.sort();
 
   // Itera sobre el array y agrega opciones al select
   arrayNombres.forEach(function (nombre) {
@@ -175,7 +214,7 @@ for (var c = 0; c < canti; c++) {
     selectNombres.add(option);
   });
 }
-
+}
 function calcularP(pr0pinas, arrayNombres, opcionesTotales) {
   var totales = [];
 
@@ -231,13 +270,13 @@ function generarPDF(pr0pinas, arrayNombres, opcionesTotales) {
     theme: 'grid',
     styles: StyleDef,
     startY: 15,
-    head: [ ["",fechasIngre[0],fechasIngre[1],fechasIngre[2],fechasIngre[3],fechasIngre[4],fechasIngre[5],fechasIngre[6],fechasIngre[7],fechasIngre[8],fechasIngre[9],fechasIngre[10],fechasIngre[11],"","",],
-      ['Nombre', "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo", "Lunes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo", "Lunes", 'Suma', "Firma"]],
+    head: [["", fechasIngre[0], fechasIngre[1], fechasIngre[2], fechasIngre[3], fechasIngre[4], fechasIngre[5], fechasIngre[6], fechasIngre[7], fechasIngre[8], fechasIngre[9], fechasIngre[10], fechasIngre[11], "", "",],
+    ['Nombre', "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo", "Lunes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo", "Lunes", 'Suma', "Firma"]],
     body: tableData,
     didDrawPage: function (data) {
       // Inserta el nombre de la tabla en la parte superior de la página
       pdf.text(`Tabla propinas AG del ${fechasIngre[0]} al ${fechasIngre[11]} `, data.settings.margin.left, 10);
-  }
+    }
   });
 
 
@@ -254,17 +293,17 @@ function propinaT(array1) {
   var sumapro = []
   var numero = removeCommas(array1);
 
-    console.log(numero);
-    if (Number.isInteger(sumarArray(numero.map(Number)))) {
-      sumapro[i] =formatN (sumarArray(numero.map(Number)));
-    } else {
-      sumapro[i] = formatN(parseFloat(sumarArray(numero.map(Number))).toFixed(0));
-    }
-    var vacios = sumapro.filter(function (elemento) {
-      return elemento !== "";
-    });
+  console.log(numero);
+  if (Number.isInteger(sumarArray(numero.map(Number)))) {
+    sumapro[i] = formatN(sumarArray(numero.map(Number)));
+  } else {
+    sumapro[i] = formatN(parseFloat(sumarArray(numero.map(Number))).toFixed(0));
+  }
+  var vacios = sumapro.filter(function (elemento) {
+    return elemento !== "";
+  });
   return vacios;
-  
+
 }
 
 //Le da formato a los numeros en . por cada 1000
@@ -282,3 +321,23 @@ function removeCommas(formattedArray) {
     }
   });
 }
+
+
+// Función para mostrar/ocultar el carrito de compras
+function mostrarCarrito() {
+  var carrito = document.getElementById("carrito");
+  if (carrito.style.display === "none") {
+    carrito.style.display = "block";
+  } else {
+    carrito.style.display = "none";
+  }
+}
+
+// Función para agregar un producto al carrito
+function agregarAlCarrito(producto) {
+  var listaCarrito = document.getElementById("listaCarrito");
+  var nuevoItem = document.createElement("li");
+  nuevoItem.textContent = producto;
+  listaCarrito.appendChild(nuevoItem);
+}
+

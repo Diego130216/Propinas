@@ -9,6 +9,21 @@
 </head>
 
 <body>
+
+  <h1>Bienvenido a la Tienda en Línea</h1>
+
+  <!-- Botón del carrito de compras -->
+  <button id="carritoBtn" onclick="mostrarCarrito()">Carrito de Compras</button>
+
+  <!-- Contenedor del carrito de compras (inicialmente oculto) -->
+  <div id="carrito" style="display: none;">
+    <h2>Agregar nombres</h2>
+    <!-- Aquí se mostrarán los productos en el carrito -->
+    <ul id="listaCarrito"></ul>
+    <label for="nombreNuevo">Valor de propina:</label>
+    <input type="text" id="nombreNuevo" name="nombreNuevo" min="0" required>
+    <button onclick="agregarNombre()">Agregar &gt;&gt;</button>
+  </div>
   <h1>Propinas AG</h1>
 
   <form id="miForm" class="miForm" action="#" method="post">
