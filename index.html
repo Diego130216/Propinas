@@ -6,6 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Formularios Dinámicos</title>
   <link rel="stylesheet" href="estilos.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+  <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
+    <script type="text/javascript" src="./js/sig_pad.js"></script>
+
+
+  
 </head>
 
 <body>
@@ -36,8 +45,22 @@
 
   </div>
   <button type="button" onclick="enviarFormularios()">Enviar</button>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+
+  <div id="signature-pad" class="signature-pad">
+    <div class="m-signature-pad--body">
+      <canvas id="FirmaD"></canvas>
+    </div>
+    <div class="m-signature-pad--footer">
+      <button id="clear">Limpiar</button>
+      <button id="save">Guardar</button>
+    </div>
+  </div>
+
+  <div id="pdf-viewer"></div>
+
+  
+
+
   <script src="script.js"></script>
   
 

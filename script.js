@@ -13,11 +13,11 @@ var arrayNombres = JSON.parse(localStorage.getItem('arregloGuardado'));
 
 
 // Modificar el arreglo (por ejemplo, agregar un nuevo elemento)
-function agregarNombre(){
- var inputNombre = document.getElementById("nombreNuevo");
-arrayNombres.push(inputNombre.value);
-localStorage.setItem('arregloGuardado', JSON.stringify(arrayNombres));
-asignrNombres();
+function agregarNombre() {
+  var inputNombre = document.getElementById("nombreNuevo");
+  arrayNombres.push(inputNombre.value);
+  localStorage.setItem('arregloGuardado', JSON.stringify(arrayNombres));
+  asignrNombres();
 }
 // Guardar el arreglo modificado de nuevo en localStorage
 localStorage.setItem('arregloGuardado', JSON.stringify(arrayNombres));
@@ -27,7 +27,7 @@ var indice = arrayNombres.indexOf("juan");
 // Verificar si el elemento está en el arreglo antes de intentar eliminarlo
 if (indice !== -1) {
   // Eliminar el elemento del arreglo
-  arrayNombres .splice(indice, 1);
+  arrayNombres.splice(indice, 1);
 
   // Guardar el arreglo modificado de nuevo en localStorage
   localStorage.setItem('arregloGuardado', JSON.stringify(arrayNombres));
@@ -38,7 +38,7 @@ console.log(arrayNombres);
 
 
 
-var canti = 12;
+var canti = 3;
 var fechasIngre = [];
 
 // Función para crear un nuevo formulario
@@ -199,21 +199,21 @@ function enviarFormularios(event) {
 }
 
 //Asignar nombres
-function asignrNombres(){
-for (var c = 0; c < canti; c++) {
+function asignrNombres() {
+  for (var c = 0; c < canti; c++) {
 
-  // Obtén el elemento select
-  var selectNombres = document.getElementById('nombre' + (c + 1));
-  arrayNombres.sort();
+    // Obtén el elemento select
+    var selectNombres = document.getElementById('nombre' + (c + 1));
+    arrayNombres.sort();
 
-  // Itera sobre el array y agrega opciones al select
-  arrayNombres.forEach(function (nombre) {
-    var option = document.createElement('option');
-    option.value = nombre.toLowerCase().replace(' ', ''); // Valor de la opción
-    option.text = nombre; // Texto visible de la opción
-    selectNombres.add(option);
-  });
-}
+    // Itera sobre el array y agrega opciones al select
+    arrayNombres.forEach(function (nombre) {
+      var option = document.createElement('option');
+      option.value = nombre.toLowerCase().replace(' ', ''); // Valor de la opción
+      option.text = nombre; // Texto visible de la opción
+      selectNombres.add(option);
+    });
+  }
 }
 function calcularP(pr0pinas, arrayNombres, opcionesTotales) {
   var totales = [];
@@ -279,9 +279,27 @@ function generarPDF(pr0pinas, arrayNombres, opcionesTotales) {
     }
   });
 
+  // Obtener el contenido del PDF como data URI
+  var dataUri = pdf.output('datauristring');
 
-  // Guardar o mostrar el PDF
-  pdf.save(`propinas del ${fechasIngre[0]} al ${fechasIngre[11]}.pdf`);
+  // Obtener el contenedor del visor PDF
+  var viewerContainer = document.getElementById('pdf-viewer');
+
+  // Limpiar el contenido actual del contenedor
+  viewerContainer.innerHTML = '';
+
+  // Crear un elemento <embed> para mostrar el PDF
+  var embed = document.createElement('embed');
+  embed.type = 'application/pdf';
+  embed.width = '100%';
+  embed.height = '800px';
+  // Establecer la escala de visualización (ajusta este valor según tus necesidades)
+  var scale = 2.0;
+  // Configurar el objeto <embed> con la escala y el contenido del PDF
+  embed.src = `${dataUri}#zoom=${scale}`;
+  // Agregar el elemento embed al contenedor del visor
+  viewerContainer.appendChild(embed);
+
 }
 
 function sumarArray(array) {
@@ -340,4 +358,19 @@ function agregarAlCarrito(producto) {
   nuevoItem.textContent = producto;
   listaCarrito.appendChild(nuevoItem);
 }
+document.addEventListener("DOMContentLoaded", function() {
+  var canvas = document.getElementById("FirmaD")
+  var signaturePad = new SignaturePad(canvas);
+  document.getElementById("clear").addEventListener("click", function() {
+    signaturePad.clear();
+  });
+
+  document.getElementById("save").addEventListener("click", function() {
+    var signatureDataUrl = signaturePad.toDataURL();
+    console.log("Firma guardada:", signatureDataUrl);
+
+    // Puedes almacenar la firma en una variable o realizar otra acción con ella
+    var firmaVariable = signatureDataUrl;
+  });
+});
 
