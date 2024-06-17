@@ -110,3 +110,15 @@ button {
 .miFormulario button:hover {
   background-color: #45a049;
 }
+
+#signature-pad {
+  border: 1px solid #000;
+  width: 500px; /* Ajusta el ancho del contenedor de la firma */
+  height: 200px; /* Ajusta la altura del contenedor de la firma */
+  margin: 0 auto;
+}
+
+.m-signature-pad--body {
+  width: 100%;
+  height: 100%;
+}

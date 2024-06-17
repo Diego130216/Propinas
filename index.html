@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Formularios Dinámicos</title>
+  <title>Propinas</title>
   <link rel="stylesheet" href="estilos.css">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
@@ -19,7 +19,7 @@
 
 <body>
 
-  <h1>Bienvenido a la Tienda en Línea</h1>
+  <h1>Bienvenido a las propis</h1>
 
   <!-- Botón del carrito de compras -->
   <button id="carritoBtn" onclick="mostrarCarrito()">Carrito de Compras</button>
@@ -29,9 +29,13 @@
     <h2>Agregar nombres</h2>
     <!-- Aquí se mostrarán los productos en el carrito -->
     <ul id="listaCarrito"></ul>
-    <label for="nombreNuevo">Valor de propina:</label>
+    <label for="nombreNuevo">Nombre a Ingresar:</label>
     <input type="text" id="nombreNuevo" name="nombreNuevo" min="0" required>
     <button onclick="agregarNombre()">Agregar &gt;&gt;</button>
+
+    <label for="quitarNombre">Nombre a eliminar:</label>
+    <input type="text" id="quitarNombre" name="quitarNombre" min="0" required>
+    <button onclick=" quitarNombre()">Eliminart &gt;&gt;</button>
   </div>
   <h1>Propinas AG</h1>
 
