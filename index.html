@@ -11,10 +11,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
   <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
-    <script type="text/javascript" src="./js/sig_pad.js"></script>
+  <script type="text/javascript" src="./js/sig_pad.js"></script>
 
 
-  
+
 </head>
 
 <body>
@@ -22,7 +22,7 @@
   <h1>Bienvenido a las propis</h1>
 
   <!-- Botón del carrito de compras -->
-  <button id="carritoBtn" onclick="mostrarCarrito()">Carrito de Compras</button>
+  <button id="carritoBtn" onclick="mostrarCarrito()">Agregar o eliminar nombre</button>
 
   <!-- Contenedor del carrito de compras (inicialmente oculto) -->
   <div id="carrito" style="display: none;">
@@ -38,7 +38,23 @@
     <button onclick=" quitarNombre()">Eliminart &gt;&gt;</button>
   </div>
   <h1>Propinas AG</h1>
-
+  <div>
+    <fieldset>
+      <legend>Elige si hay festivos</legend>
+      <label>
+          Primer festivo <input type="radio" name="festivo" value="primero"> 
+      </label>
+      <label>
+          Segundo festivo <input type="radio" name="festivo" value="segundo"> 
+      </label>
+      <label>
+          Los dos festivos <input type="radio" name="festivo" value="dos"> 
+      </label>
+      <label>
+          No hay festivos  <input type="radio" name="festivo" value="nhay"> 
+      </label>
+  </fieldset>
+  </div>
   <form id="miForm" class="miForm" action="#" method="post">
     <label for="cuadrofecha">Fecha:</label>
     <input type="date" id="fecha" name="fecha" onchange="obtenerDiaSemana()" required>
@@ -50,7 +66,7 @@
   </div>
   <button type="button" onclick="enviarFormularios()">Enviar</button>
 
-  <div id="signature-pad" class="signature-pad">
+  <!-- <div id="signature-pad" class="signature-pad">
     <div class="m-signature-pad--body">
       <canvas id="FirmaD"></canvas>
     </div>
@@ -58,15 +74,15 @@
       <button id="clear">Limpiar</button>
       <button id="save">Guardar</button>
     </div>
-  </div>
+  </div> -->
 
   <div id="pdf-viewer"></div>
 
-  
+
 
 
   <script src="script.js"></script>
-  
+
 
 
 </body>
