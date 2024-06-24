@@ -349,7 +349,7 @@ function enviarFormularios(event) {
       return typeof elemento === 'string' && elemento.trim() !== "";
     });
 
-    var propi = document.getElementById('propina' + (j + 1)).value;
+    var propi = (document.getElementById('propina' + (j + 1)).value)*0.9;
     diaTotal[j] = propi
     propiT = propiT + parseInt(propi);
     var numeroRedondeado;;
