@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Propinas</title>
+  <link rel="stylesheet" href="estilos.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+  <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
+  <script type="text/javascript" src="./js/sig_pad.js"></script>
+
+
+
+</head>
+
+<body>
+
+  <h1>Bienvenido a las propis</h1>
+
+  <!-- Botón del carrito de compras -->
+  <button id="carritoBtn" onclick="mostrarCarrito()">Agregar o eliminar nombre</button>
+
+  <!-- Contenedor del carrito de compras (inicialmente oculto) -->
+  <div id="carrito" style="display: none;">
+    <h2>Agregar nombres</h2>
+    <!-- Aquí se mostrarán los productos en el carrito -->
+    <ul id="listaCarrito"></ul>
+    <label for="nombreNuevo">Nombre a Ingresar:</label>
+    <input type="text" id="nombreNuevo" name="nombreNuevo" min="0" required>
+    <button onclick="agregarNombre()">Agregar &gt;&gt;</button>
+
+    <label for="quitarNombre">Nombre a eliminar:</label>
+    <input type="text" id="quitarNombre" name="quitarNombre" min="0" required>
+    <button onclick=" quitarNombre()">Eliminart &gt;&gt;</button>
+  </div>
+  <h1>Propinas La Cabaña de Alejo</h1>
+  <!-- <div div id="festivoDiv">
+    <fieldset>
+      <legend>Elige si hay festivos</legend>
+      <label>
+          Primer festivo <input type="radio" name="festivo" value="primero"> 
+      </label>
+      <label>
+          Segundo festivo <input type="radio" name="festivo" value="segundo"> 
+      </label>
+      <label>
+          Los dos festivos <input type="radio" name="festivo" value="dos"> 
+      </label>
+      <label>
+          No hay festivos  <input type="radio" name="festivo" value="nhay"> 
+      </label>
+  </fieldset>
+  </div> -->
+  <form id="miForm" class="miForm" action="#" method="post">
+    <label for="cuadrofecha">Fecha:</label>
+    <input type="date" id="fecha" name="fecha" onchange="obtenerDiaSemana()" required>
+  </form>
+
+  <div class="container" id="contenedorFormularios" class="form-row">
+
+
+  </div>
+  <button type="button" onclick="enviarFormularios()">Enviar</button>
+
+  <!-- <div id="signature-pad" class="signature-pad">
+    <div class="m-signature-pad--body">
+      <canvas id="FirmaD"></canvas>
+    </div>
+    <div class="m-signature-pad--footer">
+      <button id="clear">Limpiar</button>
+      <button id="save">Guardar</button>
+    </div>
+  </div> -->
+
+  <div id="pdf-viewer"></div>
+
+
+
+
+  <script src="scriptCambio.js"></script>
+
+
+
+</body>
+
+</html>

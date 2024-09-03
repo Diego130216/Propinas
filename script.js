@@ -2,29 +2,10 @@ window.jsPDF = window.jspdf.jsPDF;
 var firmaVariable = null
 // Inicializar el arreglo del local store de que el DOM haya cargado completamente
 document.addEventListener("DOMContentLoaded", function () {
-  //const canvas = document.getElementById("FirmaD");
-  // canvas.width = canvas.offsetWidth;
-  //canvas.height = canvas.offsetHeight;
-  //const signaturePad = new SignaturePad(canvas);
-
-  // document.getElementById("clear").addEventListener("click", function () {
-  //   signaturePad.clear();
-  // });
-
-  // document.getElementById("save").addEventListener("click", function () {
-  //   if (!signaturePad.isEmpty()) {
-  //     firmaVariable = signaturePad.toDataURL('image/png');
-  //     console.log("Firma guardada:", firmaVariable);
-  //   } else {
-  //     alert("Por favor, firma antes de guardar.");
-  //   }
-  // });
   recuperarNombres();
 });
 
-//var arrayNombres1 = ["juan", "diego olaya", "olaya", "manuel", "wilson lo siento", "sebastian sandoval", "b", "c", "d", "f", "a", "abc", "perreo"];
 // Arreglo a guardar
-
 // Convertir el arreglo a una cadena JSON y guardar en localStorage
 //localStorage.setItem('arregloGuardado', JSON.stringify(arrayNombres1));
 
@@ -32,12 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
 var arrayNombres = JSON.parse(localStorage.getItem('arregloGuardado'));
 
 // Modificar el arreglo (por ejemplo, agregar un nuevo elemento)
-// function agregarNombre() {
-//   var inputNombre = document.getElementById("nombreNuevo");
-//   arrayNombres.push(inputNombre.value);
-//   localStorage.setItem('arregloGuardado', JSON.stringify(arrayNombres));
-//   asignrNombres();
-// }
+
 
 function agregarNombre() {
   var inputNombre = document.getElementById("nombreNuevo");
@@ -79,9 +55,6 @@ function recuperarNombres() {
 
 console.log(arrayNombres);
 
-// const canvas = document.getElementById('FirmaD');
-// canvas.width = 30; // Ajusta el ancho del canvas
-// canvas.height = 15; // Ajusta la altura del canvas
 var festivo = 0;
 //Crear formularios seegun el radio button 
 document.querySelectorAll('input[name="festivo"]').forEach((radio) => {
@@ -106,11 +79,11 @@ document.querySelectorAll('input[name="festivo"]').forEach((radio) => {
       default:
         canti = 0;
     }
-    console.log("Valor de canti:", canti);
     formulario();  // Puedes eliminar esta línea después de la prueba
     document.querySelectorAll('input[name="festivo"]').forEach((r) => {
       r.disabled = true;
     });
+    document.getElementById('festivoDiv').style.display = 'none';
   });
 });
 
@@ -350,7 +323,8 @@ function enviarFormularios(event) {
     });
 
     var propi = (document.getElementById('propina' + (j + 1)).value)*0.9;
-    diaTotal[j] = propi
+    propi.toFixed(2);
+    diaTotal[j] = propi;
     propiT = propiT + parseInt(propi);
     var numeroRedondeado;;
 
@@ -380,46 +354,6 @@ function enviarFormularios(event) {
 
 }
 
-//Asignar nombres
-// function asignrNombres() {
-//   for (var c = 0; c < canti; c++) {
-
-//     // Obtén el elemento select
-//     var selectNombres = document.getElementById('nombre' + (c + 1));
-//     arrayNombres.sort();
-
-//     // Itera sobre el array y agrega opciones al select
-//     arrayNombres.forEach(function (nombre) {
-//       var option = document.createElement('option');
-//       option.value = nombre.toLowerCase().replace(' ', ''); // Valor de la opción
-//       option.text = nombre; // Texto visible de la opción
-//       selectNombres.add(option);
-//     });
-//   }
-// }
-
-// function asignrNombres() {
-//   for (var c = 0; c < canti; c++) {
-//       var selectNombres = document.getElementById('nombre' + (c + 1));
-
-//       if (!selectNombres) {
-//           selectNombres = document.createElement('select');
-//           selectNombres.id = 'nombre' + (c + 1);
-//           document.getElementById('selectContainer').appendChild(selectNombres);
-//       } else {
-//           selectNombres.innerHTML = ''; // Limpiar las opciones existentes antes de agregar nuevas
-//       }
-
-//       arrayNombres.sort();
-
-//       arrayNombres.forEach(function (nombre) {
-//           var option = document.createElement('option');
-//           option.value = nombre.toLowerCase().replace(' ', ''); // Valor de la opción
-//           option.text = nombre; // Texto visible de la opción
-//           selectNombres.add(option);
-//       });
-//   }
-// }
 function asignrNombres() {
   for (var c = 0; c < canti; c++) {
     var contenedorNombre = document.getElementById('nombre' + (c + 1));
@@ -517,6 +451,10 @@ function calcularP(pr0pinas, arrayNombres, opcionesTotales) {
 }
 
 function generarPDF(pr0pinas, arrayNombres, opcionesTotales, diaTotal) {
+  localStorage.setItem('pr0pinas', JSON.stringify(pr0pinas));
+  localStorage.setItem('opcionesTotales', JSON.stringify(opcionesTotales));
+  localStorage.setItem('diaTotal', JSON.stringify(diaTotal));
+  localStorage.setItem('festivo', JSON.stringify(festivo));
   var totales = calcularP(pr0pinas, arrayNombres, opcionesTotales);
 
   // Crear un nuevo documento PDF
